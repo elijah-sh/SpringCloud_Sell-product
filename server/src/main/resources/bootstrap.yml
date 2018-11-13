@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: product
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: CONFIG     # 得启动配置中心这个项目才可以
+      profile: dev   # 读取开发环境文件
+    bus:
+      refresh:
+        enabled: true   #动态刷新配置
+#  zipkin:
+#    base-url: http://192.168.99.100:9411/
+#  sleuth:
+#    sampler:
+#      probability: 1   # 抽样比例100%
+
+  rabbitmq:
+    host: 192.168.99.100
+    port: 5672                        # 是客户端的地址，不是浏览器管理端的                 #
+    username: guest
+    password: guest
+    listener:
+      simple:
+        concurrency: 5         # 五个通道
+        max-concurrency: 10     # 最大 10 个通道
+        acknowledge-mode: manual       # 默认情况下消息消费者是自动 ack （确认）消息的，如果要手动 ack（确认）则需要修改确认模式为 manual
+        prefetch: 1   #  需要并行1
+
+#配置服务追踪日志打印
+logging:
+  level:
+    org.springframework.cloud.openfeign: debug
